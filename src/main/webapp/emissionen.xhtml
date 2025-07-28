@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+<f:metadata>
+   		 <f:event type="preRenderView"
+             listener="#{emissionController.onPrerenderPublic}" />
+</f:metadata>
+      
+<h:head>
+    <title>Like Hero To Zero – CO₂-Ausstoß</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+<h:body>
+
+    <div class="main-content">
+        <h1>Like Hero To Zero</h1>
+
+        <p class="intro-text">
+            Willkommen auf unserer Plattform zur <strong>CO₂-Transparenz</strong>!<br/>
+            Dieses Projekt zeigt den aktuellsten CO₂-Ausstoß pro Kopf für jedes Land.<br/>
+            Finde heraus, ob dein Land beim Klimaschutz eher ein Hero oder ein Zero ist.
+        </p>
+
+        <h2 class="section-title">CO₂-Ausstoß je Land</h2>
+
+        <div class="emission-card">
+            <h:form>
+                <p:messages showDetail="true" />
+                <p:panel styleClass="emission-panel">
+                    <p:autoComplete 
+                        value="#{emissionController.ausgewaehltesLand}" 
+                        completeMethod="#{emissionController.vorschlaege}" 
+                        dropdown="true" 
+                        placeholder="Land eingeben..." 
+                        styleClass="emission-input" />
+
+                    <p:commandButton 
+                        value="Anzeigen" 
+                        icon="pi pi-search"
+                        action="#{emissionController.ladeEmission}" 
+                        update="outputPanel @form"
+                        styleClass="btn-primary emission-btn" />
+
+                    <p:outputPanel id="outputPanel">
+                        <p:card rendered="#{not empty emissionController.ausgewaehlteEmission}">
+                            <f:facet name="title">
+                                CO₂-Wert für #{emissionController.ausgewaehlteEmission.land}
+                            </f:facet>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Jahr:" />
+                                <h:outputText value="#{emissionController.ausgewaehlteEmission.jahr}" />
+                                <h:outputText value="CO₂-Ausstoß:" />
+                                <h:outputText value="#{emissionController.ausgewaehlteEmission.wert} #{emissionController.ausgewaehlteEmission.einheit}" />
+                            </p:panelGrid>
+                        </p:card>
+                    </p:outputPanel>
+                </p:panel>
+            </h:form>
+        </div>
+
+        <h:form>
+            <p:commandButton value="Login für Wissenschaftler:innen"
+                             icon="pi pi-lock"
+                             onclick="window.location.href='login.xhtml'; return false;"
+                             styleClass="btn-secondary login-btn" />
+        </h:form>
+    </div>
+
+</h:body>
+</html>

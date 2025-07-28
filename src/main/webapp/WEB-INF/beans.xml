@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans version="3.0" bean-discovery-mode="all">
+    <bean id="emissionController" class="likeherotozero.EmissionController" scope="application"/>
+</beans> 

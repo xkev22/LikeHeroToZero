@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <meta charset="UTF-8"/>
+    <title>Login für Wissenschaftler:innen</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+  </h:head>
+  <h:body>
+    <div class="login-container">
+      <p:panel header="Login für Wissenschaftler:innen" styleClass="login-panel">
+        <h:form id="loginForm" autocomplete="off">
+
+          <p:messages id="msgs"
+                      autoUpdate="true"
+                      showSummary="true"
+                      showDetail="false"
+                      styleClass="ui-messages-summary" />
+
+          <!-- Benutzername-->
+          <p:inputText id="user"
+                       value="#{loginController.benutzername}"
+                       placeholder="Benutzername"
+                       styleClass="login-input"
+                       autocomplete="off"
+                       required="true"
+                       label="Benutzername"
+                       requiredMessage="Bitte geben Sie Ihren Benutzernamen ein." />
+
+          <!-- Passwort-->
+          <p:password id="pw"
+                      value="#{loginController.passwort}"
+                      placeholder="Passwort"
+                      styleClass="login-input"
+                      autocomplete="off"
+                      feedback="false"
+                      required="true"
+                      label="Passwort"
+                      requiredMessage="Bitte geben Sie Ihr Passwort ein." />
+
+          <p:commandButton value="Anmelden"
+                           icon="pi pi-sign-in"
+                           action="#{loginController.login}"
+                           ajax="false"
+                           styleClass="btn-primary"
+                           update="msgs" />
+
+        </h:form>
+
+        <p:separator />
+
+        <p:button value="Zurück zur Emissionsseite"
+                  icon="pi pi-arrow-left"
+                  outcome="emissionen?faces-redirect=true"
+                  styleClass="btn-secondary" />
+      </p:panel>
+    </div>
+  </h:body>
+</html>

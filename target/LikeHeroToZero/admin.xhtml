@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+  
+  <!-- Metadaten für PreRenderView, damit das Formular bei jedem Erstaufruf zurückgesetzt wird -->
+  <f:metadata>
+    <f:event type="preRenderView"
+             listener="#{emissionController.onPrerenderView}" />
+    <f:event type="preRenderView"
+             listener="#{loginController.checkLogin}" />
+  </f:metadata>
+  
+  <h:head>
+    <title>Adminbereich – CO₂-Datenverwaltung</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+  </h:head>
+  
+  <h:body>
+    <div style="max-width: 900px; margin: 2rem auto; text-align: center;">
+      <h1>CO₂-Datenverwaltung</h1>
+
+      <h:form id="logoutForm">
+        <p:commandButton value="Logout"
+                         action="#{loginController.logout}"
+                         icon="pi pi-sign-out"
+                         styleClass="btn-secondary"
+                         style="float:right; margin-bottom:1rem;" />
+      </h:form>
+
+      <h:form id="adminForm">
+        <p:messages showDetail="true" />
+
+        <!-- Tabelle zum Bearbeiten / Löschen -->
+        <p:dataTable value="#{emissionController.emissionen}"
+                     var="e"
+                     editable="true"
+                     editMode="row"
+                     paginator="true"
+                     rows="5"
+                     rowKey="#{e.land}-#{e.jahr}"
+                     style="margin-top: 2rem; text-align: left;">
+
+          <p:column headerText="Land">
+            <p:cellEditor>
+              <f:facet name="output">#{e.land}</f:facet>
+              <f:facet name="input">
+                <p:inputText value="#{e.land}" required="true"/>
+              </f:facet>
+            </p:cellEditor>
+          </p:column>
+
+          <p:column headerText="Jahr">
+            <p:cellEditor>
+              <f:facet name="output">#{e.jahr}</f:facet>
+              <f:facet name="input">
+                <p:inputNumber value="#{e.jahr}"
+                               required="true"
+                               integerOnly="true"
+                               decimalPlaces="0"
+                               groupingSeparator=""/>
+              </f:facet>
+            </p:cellEditor>
+          </p:column>
+
+          <p:column headerText="Wert">
+            <p:cellEditor>
+              <f:facet name="output">#{e.wert}</f:facet>
+              <f:facet name="input">
+                <p:inputNumber value="#{e.wert}"
+                               required="true"
+                               decimalPlaces="2"
+                               decimalSeparator=","
+                               groupingSeparator="."
+                               minValue="0"/>
+              </f:facet>
+            </p:cellEditor>
+          </p:column>
+
+          <p:column headerText="Einheit">
+            <p:cellEditor>
+              <f:facet name="output">#{e.einheit}</f:facet>
+              <f:facet name="input">
+                <p:inputText value="#{e.einheit}" required="true"/>
+              </f:facet>
+            </p:cellEditor>
+          </p:column>
+
+          <p:column headerText="Aktion" style="width:150px;text-align:center;">
+            <p:rowEditor/>
+            <p:commandButton icon="pi pi-trash"
+                             action="#{emissionController.loescheEmission(e)}"
+                             update="@form"
+                             styleClass="ui-button-danger"
+                             onclick="return confirm('Wirklich löschen?');"/>
+          </p:column>
+        </p:dataTable>
+
+        <!-- Formular zum Hinzufügen -->
+        <h3 style="margin-top: 3rem;">Neue Emission hinzufügen</h3>
+        <p:panelGrid columns="5" style="margin:1rem auto; text-align:left;">
+
+          <p:inputText   value="#{emissionController.neu.land}"
+                         placeholder="Land"/>
+
+          <p:inputNumber value="#{emissionController.neu.jahr}"
+                         placeholder="Jahr"
+                         integerOnly="true"
+                         decimalPlaces="0"
+                         groupingSeparator="."
+                         minValue="0"/>
+
+          <p:inputNumber value="#{emissionController.neu.wert}"
+                         placeholder="Wert"
+                         decimalPlaces="2"
+                         decimalSeparator=","
+                         groupingSeparator="."
+                         minValue="0"/>
+
+          <p:inputText   value="#{emissionController.neu.einheit}"
+                         placeholder="Einheit"
+                         style="width:100px"/>
+
+          <p:commandButton value="Hinzufügen"
+                           action="#{emissionController.hinzufuegenEmission}"
+                           process="@form"
+                           update="@form"
+                           styleClass="ui-button-success"/>
+        </p:panelGrid>
+      </h:form>
+    </div>
+  </h:body>
+</html>
