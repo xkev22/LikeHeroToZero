@@ -1,6 +1,6 @@
 ## Like Hero To Zero – Fallstudienprojekt
 
-**Like Hero To Zero** ist ein Java EE-Projekt, das die CO₂-Emissionen weltweit verwaltet, visualisiert und vergleichbar macht. Das Projekt wurde im Rahmen einer Fallstudie für das Modul IPWA02 entwickelt und nutzt aktuelle Java-Technologien wie JSF, JPA (Hibernate), MySQL sowie PrimeFaces zur Umsetzung einer dreischichtigen Webanwendung.
+**Like Hero To Zero** ist ein Java EE-Projekt, das die CO₂-Emissionen weltweit verwaltet, visualisiert und vergleichbar macht. Das Projekt wurde im Rahmen einer Fallstudie für das Modul IPWA02 entwickelt und nutzt aktuelle Java-Technologien wie JSF, JPA (Hibernate), MySQL sowie PrimeFaces zur Umsetzung einer Webanwendung.
 
 
 
